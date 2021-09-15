@@ -1,16 +1,23 @@
 
 export interface listItemDataInterface {
     name: string,
-    description:string,
+    description: string,
     estimate: string,
     state: string,
     id?: number
 };
 
+export interface itemDataReducerInterface {
+    name: string,
+    description: string,
+    estimate: string,
+    state: string,
+    id: number
+};
+
 export interface listActionInterface {
     type: string,
     payload: listItemDataInterface
-
 };
 
 export interface listDataResponseInterface {
@@ -20,7 +27,8 @@ export interface listDataResponseInterface {
 
 export interface listDataReducerInterface {
     fetching: boolean,
-    data: Array<listItemDataInterface>
+    data: Array<itemDataReducerInterface>,
+    activeItem?: listItemDataInterface|null
 };
 
 export interface modalInterface {
@@ -29,7 +37,18 @@ export interface modalInterface {
     title: string
 }
 
-export type modalActionInterface = {
+export interface modalActionInterface {
     type: string,
     payload: modalInterface
+}
+
+export interface ItemComponentInterface {
+    show: boolean,
+    handler: any,
+    handleClose: any
+}
+
+export type listDataType = listDataReducerInterface & {
+    editHandler?: any, 
+    deleteHandler?: any
 }

@@ -1,5 +1,5 @@
 import * as actionTypes from '../constants/actionTypes';
-import { listDataReducerInterface, listActionInterface } from '../interfaces'
+import { listDataReducerInterface, listActionInterface, itemDataReducerInterface } from '../interfaces'
 
 const initialState: listDataReducerInterface = {
     fetching: false,
@@ -46,23 +46,35 @@ const initialState: listDataReducerInterface = {
             state: "Completed",
             id: 6
         }
-    ]
+    ],
+    activeItem: null
 };
 
 
 export const list = (state = initialState, action: listActionInterface): listDataReducerInterface => {
     switch (action.type) {
         case actionTypes.LIST_ACTION_ADD:
-            const newList = [...state.data, action.payload]
+            state.data.sort((a: itemDataReducerInterface, b: itemDataReducerInterface) => a.id < b.id ? -1 : 1);
+
+            const newList = [
+                ...state.data, 
+                {
+                    ...action.payload,
+                    id: state.data.length ? state.data[state.data.length - 1].id + 1 : 1
+                }
+            ];
+
+            console.log(newList);
             return {
                 ...state,
                 data: newList
             };
 
         case actionTypes.LIST_ACTION_EDIT:
-            state.data.map(e => e.id === action.payload.id ? action.payload : e);
             return {
-                ...state
+                ...state,
+                activeItem: null,
+                //data: state.data.map(e => e.id === action.payload.id ? action.payload : e)
             };
 
         case actionTypes.LIST_ACTION_DELETE:
@@ -70,6 +82,19 @@ export const list = (state = initialState, action: listActionInterface): listDat
             return {
                 ...state,
                 data: deletedResult
+            };
+
+        case actionTypes.ITEM_ACTION_ADD:
+            return {
+                ...state,
+                activeItem: null
+            };
+
+        case actionTypes.ITEM_ACTION_EDIT:
+            state.data.map(e => e.id === action.payload.id ? action.payload : e);
+            return {
+                ...state,
+                activeItem: action.payload
             };
 
         default:
