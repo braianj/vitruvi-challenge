@@ -4,6 +4,7 @@ import * as interfaces from "../interfaces";
 
 /**
  * Action to do with the list
+ * Here is the place where fetch to api should should go
  * @param payload 
  * @returns 
  */

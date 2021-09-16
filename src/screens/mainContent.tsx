@@ -60,10 +60,14 @@ const MainContent = () => {
             <Navbar bg="dark" variant="dark">
                 <Navbar.Brand href="#">Challenge</Navbar.Brand>
             </Navbar>
-            <Jumbotron fluid>
-                <h1>Hello, world!</h1>
+            <Jumbotron fluid className='main-container'>
+                <h1>Welcome to the challenge!</h1>
                 <p>
-                    This is an example list
+                    TO DO:
+                    * Present visually a list of tasks in 3 different states: Planned, In progress, Completed.<br/>
+                    * Each task contains, name, description, estimate and state.<br />
+                    * The user needs to be able to add/remove and change the state of the tasks.<br />
+                    * Somewhere in the application you need to present an up to date status, adding up all hours for each state.
                 </p>
 
                 <Button variant="primary" onClick={() => newHandler()}>
@@ -79,7 +83,7 @@ const MainContent = () => {
             <ItemComponent 
                 show={showItem} 
                 handler={handlerItemComponent} 
-                handleClose={handlerCloseItemComponent} 
+                handleClose={handlerCloseItemComponent}
             ></ItemComponent>
         </div>
     );

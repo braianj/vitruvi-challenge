@@ -2,22 +2,22 @@
 export interface listItemDataInterface {
     name: string,
     description: string,
-    estimate: string,
+    estimate: number,
     state: string,
-    id?: number
+    id: number | null
 };
 
 export interface itemDataReducerInterface {
     name: string,
     description: string,
-    estimate: string,
+    estimate: number,
     state: string,
     id: number
 };
 
 export interface listActionInterface {
     type: string,
-    payload: listItemDataInterface
+    payload: itemDataReducerInterface
 };
 
 export interface listDataResponseInterface {
@@ -45,7 +45,8 @@ export interface modalActionInterface {
 export interface ItemComponentInterface {
     show: boolean,
     handler: any,
-    handleClose: any
+    handleClose: any,
+    isUpdateAll?: boolean
 }
 
 export type listDataType = listDataReducerInterface & {

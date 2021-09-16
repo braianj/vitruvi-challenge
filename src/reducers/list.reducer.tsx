@@ -7,42 +7,42 @@ const initialState: listDataReducerInterface = {
         {
             name: "Name 1",
             description: "Description 1",
-            estimate: "Estimate 1",
+            estimate: 2,
             state: "Planned",
             id: 1
         },
         {
             name: "Name 2",
             description: "Description 2",
-            estimate: "Estimate 2",
+            estimate: 4,
             state: "In progress",
             id: 2
         },
         {
             name: "Name 3",
             description: "Description 3",
-            estimate: "Estimate 3",
+            estimate: 3,
             state: "Completed",
             id: 3
         },
         {
             name: "Name 4",
             description: "Description 4",
-            estimate: "Estimate 4",
+            estimate: 6,
             state: "Planned",
             id: 4
         },
         {
             name: "Name 5",
             description: "Description 5",
-            estimate: "Estimate 5",
+            estimate: 7,
             state: "In progress",
             id: 5
         },
         {
             name: "Name 6",
             description: "Description 6",
-            estimate: "Estimate 6",
+            estimate: 1,
             state: "Completed",
             id: 6
         }
@@ -71,10 +71,11 @@ export const list = (state = initialState, action: listActionInterface): listDat
             };
 
         case actionTypes.LIST_ACTION_EDIT:
+            const dataEdited = state.data.map(e => e.id === action.payload.id ? action.payload : e);
             return {
                 ...state,
                 activeItem: null,
-                //data: state.data.map(e => e.id === action.payload.id ? action.payload : e)
+                data: dataEdited
             };
 
         case actionTypes.LIST_ACTION_DELETE:

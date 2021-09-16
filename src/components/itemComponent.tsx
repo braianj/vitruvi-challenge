@@ -5,30 +5,30 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../reducers';
 import { useInput } from '../hooks/inputHook';
 
-const ItemComponent = ({ show, handler, handleClose }: ItemComponentInterface) => {
+const ItemComponent = ({ show, handler, handleClose, isUpdateAll }: ItemComponentInterface) => {
 
     // Load list from reducer
     const activeItem = useSelector((state: RootState) => state.list.activeItem);
     
-    const { value: name, bind: bindName, setValue: setValueName } = useInput('');
-    const { value: description, bind: bindDescription, setValue: setValueDescription } = useInput('');
-    const { value: estimate, bind: bindEstimate, setValue: setValueEstimate } = useInput('');
-    const { value: state, bind: bindState, setValue: setValueState } = useInput('');
+    const { value: name, bind: bindName, setValue: setValueName, reset: resetName } = useInput('');
+    const { value: description, bind: bindDescription, setValue: setValueDescription, reset: resetDescription } = useInput('');
+    const { value: estimate, bind: bindEstimate, setValue: setValueEstimate, reset: resetEstimate } = useInput('');
+    const { value: state, bind: bindState, setValue: setValueState, reset: resetState } = useInput('Planned');
 
     // this effect will set the values that cames from the reducer
     React.useEffect(() => {
-        if (activeItem) {
+        if (activeItem && show) {
             setValueName(activeItem.name);
             setValueDescription(activeItem.description);
             setValueEstimate(activeItem.estimate);
             setValueState(activeItem.state);
         } else {
-            setValueName('');
-            setValueDescription('');
-            setValueEstimate('');
-            setValueState('Planned');
+            resetName();
+            resetDescription();
+            resetEstimate();
+            resetState();
         }
-    }, [activeItem]);
+    }, [activeItem, show]);
 
     // action to submit values
     const submitData = () => {
@@ -56,6 +56,7 @@ const ItemComponent = ({ show, handler, handleClose }: ItemComponentInterface) =
                         aria-label="Default"
                         aria-describedby="inputGroup-sizing-default"
                         {...bindName}
+                        disabled={!isUpdateAll}
                     />
                 </InputGroup>
                 <InputGroup className="mb-3">
@@ -66,6 +67,7 @@ const ItemComponent = ({ show, handler, handleClose }: ItemComponentInterface) =
                         aria-label="Default"
                         aria-describedby="inputGroup-sizing-default"
                         {...bindDescription}
+                        disabled={!isUpdateAll}
                     />
                 </InputGroup>
                 <InputGroup className="mb-3">
@@ -76,6 +78,7 @@ const ItemComponent = ({ show, handler, handleClose }: ItemComponentInterface) =
                         aria-label="Default"
                         aria-describedby="inputGroup-sizing-default"
                         {...bindEstimate}
+                        disabled={!isUpdateAll}
                     />
                 </InputGroup>
                 <InputGroup className="mb-3">

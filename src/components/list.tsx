@@ -7,6 +7,20 @@ import * as interfaces from "../interfaces";
  * @returns 
  */
 const List = ({ data, fetching, editHandler, deleteHandler }: interfaces.listDataType) => {
+    let plannedSum = 0;
+    let inProgressSum = 0;
+    let completedSum = 0;
+    // make a simple sumatory of the differents states
+    data.map(e => {
+        if (e.state === "Planned") {
+            plannedSum += e.estimate;
+        } else if (e.state === "In progress") {
+            inProgressSum += e.estimate;
+        } else if (e.state === "Completed") {
+            completedSum += e.estimate;
+        }
+    });
+    
     return (
         <Table striped bordered hover variant="dark" responsive>
             <thead>
@@ -29,13 +43,27 @@ const List = ({ data, fetching, editHandler, deleteHandler }: interfaces.listDat
                             <td>{e.estimate}</td>
                             <td>{e.state}</td>
                             <td>
-                                <Button variant="outline-primary" onClick={() => editHandler(e)}>Edite</Button>{' '}
+                                <Button variant="outline-primary" onClick={() => editHandler(e)}>Change State</Button>{' '}
                                 <Button variant="outline-danger" onClick={() => deleteHandler(e)}>Delete</Button>
                             </td>
                         </tr>
                     )
                 }
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colSpan={6}>State Totals</td>
+                </tr>
+                <tr>
+                    <td colSpan={6}>Planed: {plannedSum}</td>
+                </tr>
+                <tr>
+                    <td colSpan={6}>In Progress: {inProgressSum}</td>
+                </tr>
+                <tr>
+                    <td colSpan={6}>Completed: {completedSum}</td>
+                </tr>
+            </tfoot>
         </Table>
     );
 }

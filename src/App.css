@@ -1,5 +1,6 @@
 .main-container {
-  background-color:ghostwhite;
+  margin: 50px;
+  padding: 50px 100px;
 }
 
 .App {
